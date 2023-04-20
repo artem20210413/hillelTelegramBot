@@ -17,8 +17,6 @@ services:
     depends_on:
       - demo-mysql
       - demo-redis
-    env_file:
-      - .env
     volumes:
       - ./:/app:cached
     extra_hosts:
