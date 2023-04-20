@@ -1,0 +1,4 @@
+GET https://api.telegram.org/bot5964951853:AAHHhJHqd-HohYdTHmTRV82qak8aZ7xX0xU/getUpdates
+GET https://api.telegram.org/bot5964951853:AAHHhJHqd-HohYdTHmTRV82qak8aZ7xX0xU/getUpdates?offset=329586708
+GET https://api.telegram.org/bot5964951853:AAHHhJHqd-HohYdTHmTRV82qak8aZ7xX0xU/getMe
+
