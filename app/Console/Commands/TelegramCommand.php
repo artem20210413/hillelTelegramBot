@@ -26,13 +26,16 @@ class TelegramCommand extends Command
      */
     public function handle(TelegramReaderService $telegramReader)
     {
-        //
-        $offset = 0;
-        while (true) {
-            $offset = $telegramReader->getUpdates($offset);
-            $this->info( 'offset: ' . $offset . '. At work...');
-//            $this->info('Rest...');
-            sleep(config('telegram.sleep'));
+        try {
+            $offset = 0;
+
+            while (true) {
+                $offset = $telegramReader->getUpdates($offset);
+                $this->info('offset: ' . $offset . '. At work...');
+                sleep(config('telegram.sleep'));
+            }
+        } catch (\InvalidArgumentException $e) {
+            return $e->getMessage();
         }
     }
 }

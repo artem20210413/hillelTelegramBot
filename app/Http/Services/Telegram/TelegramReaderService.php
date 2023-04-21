@@ -4,6 +4,7 @@
 namespace App\Http\Services\Telegram;
 
 
+use App\Http\Services\Game\MathQuiz\MathQuizLogic;
 use App\Http\Services\Telegram\RequestParams\GetUpdateParams;
 use App\Http\Services\Telegram\RequestParams\TextMessage;
 
@@ -13,26 +14,38 @@ class TelegramReaderService extends TelegramClient
     {
     }
 
-    public function getUpdates(int $offset = 0):int
+    public function getUpdates(int $offset = 0): int
     {
-        $messages = $this->makeRequest(TelegramApiMethodDictionary::METHOD_GET_UPDATE, GetUpdateParams::create($offset+1));
+        $messages = $this->makeRequest(TelegramApiMethodDictionary::METHOD_GET_UPDATE, GetUpdateParams::create($offset + 1));
 
         if (!$messages) {
             return 0;
         }
         foreach ($messages as $message) {
-            $this->handleMessage($message);
+            $messagesDto = new MessageDto($message);
+            $this->handleMathQuizMessage($messagesDto);
         }
-        return $message['update_id'];
+        return $messagesDto->getUpdateId();
 
     }
 
-    private function handleMessage(array $message)
+    private function handleMessage(MessageDto $message)
     {
         $tMessage = new TextMessage();
-        $tMessage->setChatId($message['message']['chat']['id']);
-        $tMessage->setReplyToMessageId($message['message']['message_id']);
-        $tMessage->setText('textMessage');
+        $tMessage->setChatId($message->getChatId());
+        $tMessage->setReplyToMessageId($message->getMessageId());
+        $tMessage->setText($message->getText());
+
+        $this->respondService->sendMessages($tMessage);
+    }
+
+    private function handleMathQuizMessage(MessageDto $message)
+    {
+        $mathEx = new MathQuizLogic();
+        $tMessage = new TextMessage();
+        $tMessage->setChatId($message->getChatId());
+        $tMessage->setReplyToMessageId($message->getMessageId());
+        $tMessage->setText($mathEx->getMathQuizExample()->getStringExample());
 
         $this->respondService->sendMessages($tMessage);
     }
