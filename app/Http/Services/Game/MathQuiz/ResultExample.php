@@ -7,9 +7,9 @@ namespace App\Http\Services\Game\MathQuiz;
 class ResultExample
 {
 
-    private $resultCorrect;
-    private $resultErroneous_1;
-    private $resultErroneous_2;
+    private int $resultCorrect;
+    private int $resultErroneous_1;
+    private int $resultErroneous_2;
 
     public function __construct(public MathQuizExample $mathQuizExample)
     {
@@ -46,7 +46,7 @@ class ResultExample
     /**
      * @return mixed
      */
-    public function getResultCorrect()
+    public function getResultCorrect(): int
     {
         return $this->resultCorrect;
     }
@@ -54,7 +54,7 @@ class ResultExample
     /**
      * @return mixed
      */
-    public function getResultErroneous1()
+    public function getResultErroneous1(): int
     {
         return $this->resultErroneous_1;
     }
@@ -63,7 +63,7 @@ class ResultExample
     /**
      * @return mixed
      */
-    public function getResultErroneous2()
+    public function getResultErroneous2(): int
     {
         return $this->resultErroneous_2;
     }

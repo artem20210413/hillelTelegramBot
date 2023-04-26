@@ -98,7 +98,7 @@ class MessageDto
     /**
      * @param int $chatId
      */
-    public function setChatId(int $chatId): static
+    private function setChatId(int $chatId): static
     {
         $this->chatId = $chatId;
 
@@ -108,7 +108,7 @@ class MessageDto
     /**
      * @param string $text
      */
-    public function setText(string $text): static
+    private function setText(string $text): static
     {
         $this->text = $text;
         return $this;

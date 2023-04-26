@@ -41,11 +41,11 @@ class TelegramReaderService extends TelegramClient
 
     private function handleMathQuizMessage(MessageDto $message)
     {
-        $mathEx = new MathQuizLogic();
+        $mathEx = new MathQuizLogic($message);
         $tMessage = new TextMessage();
         $tMessage->setChatId($message->getChatId());
         $tMessage->setReplyToMessageId($message->getMessageId());
-        $tMessage->setText($mathEx->getMathQuizExample()->getStringExample());
+        $tMessage->setText($mathEx->responseMessage());
 
         $this->respondService->sendMessages($tMessage);
     }

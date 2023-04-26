@@ -16,7 +16,6 @@ class TelegramClient
         $response = Http::get($this->getBasicUrl() . $method . '?' . http_build_query($params->toArray()));
 
         return $this->getResult($response->json());
-        //TODO записывать пользователя и сообщение в DTO
     }
 
     private function getBasicUrl()

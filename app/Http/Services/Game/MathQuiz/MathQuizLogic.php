@@ -4,29 +4,39 @@
 namespace App\Http\Services\Game\MathQuiz;
 
 
-class MathQuizLogic
+use App\Http\Services\Telegram\MessageDto;
+
+class MathQuizLogic extends MathQuizExample
 {
-    private MathQuizExample $mathQuizExample;
 
-    public function __construct()
+    public function __construct(public MessageDto $messageDto)
     {
-        $this->setMathQuizExample();
+        parent::__construct();
     }
 
-    private function setMathQuizExample(): static
-    {
-        $this->mathQuizExample = new MathQuizExample();
 
-        return $this;
+    //узнать что пришло getScore или число(ответ)
+
+
+    public function responseMessage(): string
+    {
+        $text = $this->messageDto->getText();
+        if ($text === '/start') {
+
+            return $this->start($this->messageDto);
+        } elseif (is_numeric($text)) {
+
+            return $this->calculationExample($this->messageDto);
+        } else if ($text === '/getScore') {
+
+            return $this->getScore($this->messageDto);
+        } else {
+
+            return 'Упс... Невідома команда.';
+        }
     }
 
-    /**
-     * @return MathQuizExample
-     */
-    public function getMathQuizExample(): MathQuizExample
-    {
-        return $this->mathQuizExample;
-    }
+
 
 
 }
